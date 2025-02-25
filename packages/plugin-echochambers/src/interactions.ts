@@ -219,17 +219,19 @@ export class InteractionClient {
             const defaultRoom = this.runtime.getSetting(
                 "ECHOCHAMBERS_DEFAULT_ROOM"
             );
+            console.log('my room ', defaultRoom)
             const rooms = await this.client.listRooms();
-
+            console.log('list of rooms ', rooms)
             for (const room of rooms) {
                 // Only process messages from the default room if specified
                 if (defaultRoom && room.id !== defaultRoom) {
                     continue;
                 }
-
+                console.log("now here")
                 const messages = await this.client.getRoomHistory(room.id);
+                console.log('my messages ', messages)
                 this.messageThreads.set(room.id, messages);
-
+                console.log('another here')
                 // Get only the most recent message that we should process
                 const latestMessages = messages
                     .filter((msg) => !this.shouldProcessMessage(msg, room)) // Fixed: Now filtering out messages we shouldn't process
@@ -238,11 +240,11 @@ export class InteractionClient {
                             new Date(b.timestamp).getTime() -
                             new Date(a.timestamp).getTime()
                     );
-
+                    console.log(latestMessages)
                 if (latestMessages.length > 0) {
                     const latestMessage = latestMessages[0];
                     await this.handleMessage(latestMessage, room.topic);
-
+                    console.log('in the if')
                     // Update history
                     const roomHistory = this.messageHistory.get(room.id) || [];
                     roomHistory.push({
@@ -250,7 +252,7 @@ export class InteractionClient {
                         response: null, // Will be updated when we respond
                     });
                     this.messageHistory.set(room.id, roomHistory);
-
+                    console.log('not here')
                     // Update last checked timestamp
                     if (
                         latestMessage.timestamp >
