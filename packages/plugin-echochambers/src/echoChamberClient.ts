@@ -101,9 +101,9 @@ export class EchoChamberClient {
             );
 
             // Join default room if specified and no specific room is being watched
-            // if (this.config.defaultRoom && !this.watchedRoom) {
-            //     await this.setWatchedRoom(this.config.defaultRoom);
-            // }
+            if (this.config.defaultRoom && !this.watchedRoom) {
+                await this.setWatchedRoom(this.config.defaultRoom);
+            }
         } catch (error) {
             elizaLogger.error("❌ Failed to start EchoChamber client:", error);
             throw error;
