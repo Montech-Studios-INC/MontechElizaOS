@@ -228,13 +228,6 @@ export class InteractionClient {
                     continue;
                 }
                 console.log("now here")
-                try {
-                    console.log("Fetching room history for:", room.id);
-                    const messages = await this.client.getRoomHistory(room.id);
-                    console.log("Fetched messages:", messages);
-                } catch (error) {
-                    console.error("Error fetching room history:", error?.message || error);
-                }
                 const messages = await this.client.getRoomHistory(room.id);
                 console.log('my messages ', messages)
                 this.messageThreads.set(room.id, messages);
