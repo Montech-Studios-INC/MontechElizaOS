@@ -54,15 +54,16 @@ export class EchoChamberClient {
         try {
             // Verify room exists
             const rooms = await this.listRooms();
+            console.log('rooms', rooms)
             const room = rooms.find((r) => r.id === roomId);
-
+            console.log(room, roomId)
             if (!room) {
                 throw new Error(`Room ${roomId} not found`);
             }
-
+            console.log('got here')
             // Set new watched room
             this.watchedRoom = roomId;
-
+            console.log('watchedRoom ', this.watchedRoom)
             elizaLogger.success(`Now watching room: ${room.name}`);
         } catch (error) {
             elizaLogger.error("Error setting watched room:", error);
