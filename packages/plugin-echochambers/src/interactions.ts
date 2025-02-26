@@ -277,7 +277,7 @@ export class InteractionClient {
 
     private async handleMessage(message: ChatMessage, roomTopic: string) {
         try {
-            const roomId = message.roomId;
+            const roomId = stringToUuid(message.roomId);
             const userId = stringToUuid(message.sender.username);
             console.log(roomId, ' --- ', userId)
             // Ensure connection exists
