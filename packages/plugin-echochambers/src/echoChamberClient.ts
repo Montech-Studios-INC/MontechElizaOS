@@ -134,20 +134,15 @@ export class EchoChamberClient {
 
     public async listRooms(tags?: string[]): Promise<ChatRoom[]> {
         try {
-            console.log('starting', tags)
             const url = new URL(this.apiUrl);
             if (tags?.length) {
                 url.searchParams.append("tags", tags.join(","));
             }
-            console.log('log url', url)
             const response = await fetch(url.toString());
-            console.log('log res', response)
             if (!response.ok) {
                 throw new Error(`Failed to list rooms: ${response.statusText}`);
             }
-            console.log('got here')
             const data = (await response.json()) as ListRoomsResponse;
-            console.log(data)
             return data.rooms;
         } catch (error) {
             elizaLogger.error("Error listing rooms:", error);

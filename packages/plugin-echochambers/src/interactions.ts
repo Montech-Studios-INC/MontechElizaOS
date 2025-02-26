@@ -277,9 +277,9 @@ export class InteractionClient {
 
     private async handleMessage(message: ChatMessage, roomTopic: string) {
         try {
-            const roomId = stringToUuid(message.roomId);
+            const roomId = message.roomId;
             const userId = stringToUuid(message.sender.username);
-
+            console.log(roomId, ' --- ', userId)
             // Ensure connection exists
             await this.runtime.ensureConnection(
                 userId,
@@ -288,13 +288,13 @@ export class InteractionClient {
                 message.sender.username,
                 "echochambers"
             );
-
+            console.log('executed ensure connection')
             // Build message thread for context
             const thread = await this.buildMessageThread(
                 message,
                 this.messageThreads.get(message.roomId) || []
             );
-
+            console.log('got to thread')
             // Create memory object
             const memory: Memory = {
                 id: stringToUuid(message.id),
@@ -313,7 +313,7 @@ export class InteractionClient {
                 createdAt: new Date(message.timestamp).getTime(),
                 embedding: getEmbeddingZeroVector(),
             };
-
+            console.log('message ', message)
             // Check if we've already processed this message
             const existing = await this.runtime.messageManager.getMemoryById(
                 memory.id
@@ -324,10 +324,10 @@ export class InteractionClient {
                 );
                 return;
             }
-
+            console.log('there should be unprocessed message to get here')
             // Save the message to memory
             await this.runtime.messageManager.createMemory(memory);
-
+            console.log('save message to runtime memory')
             // Compose state with thread context
             let state = await this.runtime.composeState(memory);
             state = await this.runtime.updateRecentMessageState(state);
@@ -352,7 +352,7 @@ export class InteractionClient {
                 );
                 return;
             }
-
+            console.log('about to start generating context')
             // Generate response
             const responseContext = composeContext({
                 state,
@@ -360,13 +360,13 @@ export class InteractionClient {
                     this.runtime.character.templates?.messageHandlerTemplate ||
                     createMessageTemplate(message.roomId, roomTopic),
             });
-
+            console.log('end generating context')
             const response = await generateMessageResponse({
                 runtime: this.runtime,
                 context: responseContext,
                 modelClass: ModelClass.LARGE,
             });
-
+            console.log('about to start generating msg', response)
             if (!response || !response.text) {
                 elizaLogger.log("No response generated");
                 return;
@@ -389,7 +389,7 @@ export class InteractionClient {
                 if (lastEntry && lastEntry.message.id === message.id) {
                     lastEntry.response = sentMessage;
                 }
-
+                console.log('room history')
                 const responseMemory: Memory = {
                     id: stringToUuid(sentMessage.id),
                     userId: this.runtime.agentId,
@@ -408,7 +408,7 @@ export class InteractionClient {
                     createdAt: new Date(sentMessage.timestamp).getTime(),
                     embedding: getEmbeddingZeroVector(),
                 };
-
+                console.log('dddd')
                 await this.runtime.messageManager.createMemory(responseMemory);
                 return [responseMemory];
             };
@@ -424,6 +424,7 @@ export class InteractionClient {
             );
             await this.runtime.evaluate(memory, state, true);
         } catch (error) {
+            console.log(error)
             elizaLogger.error("Error handling message:", error);
         }
     }
