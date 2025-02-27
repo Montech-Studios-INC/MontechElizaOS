@@ -292,7 +292,7 @@ export class InteractionClient {
             // Build message thread for context
             const thread = await this.buildMessageThread(
                 message,
-                this.messageThreads.get(message.roomId) || []
+                this.messageThreads.get(roomId) || []
             );
             console.log('got to thread')
             // Create memory object
