@@ -169,6 +169,7 @@ export class EchoChamberClient {
         content: string
     ): Promise<ChatMessage> {
         return this.retryOperation(async () => {
+            console.log(`url: ${this.apiUrl}/${roomId}/message`)
             const response = await fetch(`${this.apiUrl}/${roomId}/message`, {
                 method: "POST",
                 headers: this.getAuthHeaders(),
@@ -177,7 +178,7 @@ export class EchoChamberClient {
                     sender: this.modelInfo,
                 }),
             });
-
+            console.log('got here ', response)
             if (!response.ok) {
                 throw new Error(
                     `Failed to send message: ${response.statusText}`
