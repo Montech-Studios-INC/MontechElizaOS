@@ -53,7 +53,14 @@ export function createApiRouter(
 ) {
     const router = express.Router();
 
-    router.use(cors());
+    router.use(cors({
+        origin: [
+            'https://echo-chamber-client.vercel.app',
+            'https://echo-chamber-client-h8co8cwv5-yusufs-projects-71de9b07.vercel.app',
+            'https://clara.illuminance.tech'
+        ],
+        credentials: true, // Allow sending cookies, Authorization headers
+    }));
     router.use(bodyParser.json());
     router.use(bodyParser.urlencoded({ extended: true }));
     router.use(
