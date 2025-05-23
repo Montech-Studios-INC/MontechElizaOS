@@ -1,7 +1,3 @@
-import { composeContext } from "@elizaos/core";
-import { generateText } from "@elizaos/core";
-import { getGoals } from "@elizaos/core";
-import { parseJsonArrayFromText } from "@elizaos/core";
 import {
     type IAgentRuntime,
     type Memory,
@@ -10,7 +6,11 @@ import {
     type Goal,
     type State,
     type Evaluator,
-} from "@elizaos/core";
+    parseJsonArrayFromText,
+    getGoals,
+    generateText,
+    composeContext,
+} from "@elizaos/core-plugin-v1";
 
 const goalsTemplate = `TASK: Update Goal
 Analyze the conversation and update the status of the goals based on the new information provided.
@@ -80,34 +80,18 @@ async function handler(
 
     // Apply the updates to the goals
     const updatedGoals = goalsData
-        .map((goal: Goal) => {
+        .map((goal: Goal): Goal => {
             const update = updates?.find((u) => u.id === goal.id);
             if (update) {
-                const objectives = goal.objectives;
-
-                // for each objective in update.objectives, find the objective with the same description in 'objectives' and set the 'completed' value to the update.objectives value
-                if (update.objectives) {
-                    for (const objective of objectives) {
-                        const updatedObjective = update.objectives.find(
-                            (o: Objective) =>
-                                o.description === objective.description
-                        );
-                        if (updatedObjective) {
-                            objective.completed = updatedObjective.completed;
-                        }
-                    }
-                }
-
+                // Merge the update into the existing goal
                 return {
                     ...goal,
                     ...update,
-                    objectives: [
-                        ...goal.objectives,
-                        ...(update?.objectives || []),
-                    ],
-                }; // Merging the update into the existing goal
-            } else {
-                console.warn("**** ID NOT FOUND");
+                    objectives: goal.objectives.map((objective) => {
+                        const updatedObjective = update.objectives?.find(uo => uo.description === objective.description);
+                        return updatedObjective ? { ...objective, ...updatedObjective } : objective;
+                    }),
+                };
             }
             return null; // No update for this goal
         })

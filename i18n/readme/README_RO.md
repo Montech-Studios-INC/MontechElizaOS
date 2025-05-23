@@ -1,6 +1,21 @@
 # Eliza
 
-<img src="./docs/static/img/eliza_banner.jpg" alt="Eliza Banner" width="100%" />
+<img src="/docs/static/img/eliza_banner.jpg" alt="Eliza Banner" width="100%" />
+<div align="center">
+
+📖 [Documente](https://elizaos.github.io/eliza/) | 🎯 [Exemple](https://github.com/thejoven/awesome-eliza)
+
+</div>
+
+## 🌍 Traduceri README
+
+[中文说明](./README_CN.md) | [日本語の説明](./README_JA.md) | [한국어 설명](./README_KOR.md) | [Persian](./README_FA.md) | [Français](./README_FR.md) | [Português](./README_PTBR.md) | [Türkçe](./README_TR.md) | [Русский](./README_RU.md) | [Español](./README_ES.md) | [Italiano](./README_IT.md) | [ไทย](./README_TH.md) | [Deutsch](./README_DE.md) | [Tiếng Việt](./README_VI.md) | [עִברִית](https://github.com/elizaos/Elisa/blob/main/README_HE.md) | [Tagalog](./README_TG.md) | [Polski](./README_PL.md) | [Arabic](./README_AR.md) | [Hungarian](./README_HU.md) | [Srpski](./README_RS.md) | [Română](./README_RO.md) | [Nederlands](./README_NL.md)
+
+## 🚩 Cuprins
+
+<div align="center">
+  <img src="/docs/static/img/eliza_diagram.png" alt="Eliza Diagram" width="100%" />
+</div>
 
 ## Funcționalități
 
@@ -34,7 +49,7 @@
 
 ### Edite fișierul de personaj
 
--   Verificați fișierul `src/core/defaultCharacter.ts` – îl puteți modifica
+-   Verificați fișierul `packages/core/src/defaultCharacter.ts` – îl puteți modifica
 -   De asemenea, puteți încărca personaje cu comanda `pnpm start --characters="path/to/your/character.json"` și rula mai mulți boți în același timp.
 
 După ce ați configurat fișierul .env și fișierul de personaj, puteți porni botul cu următoarea comandă:

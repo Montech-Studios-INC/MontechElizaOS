@@ -1,6 +1,6 @@
 # Eliza
 
-<img src="./docs/static/img/eliza_banner.jpg" alt="Banner de Eliza" width="100%" />
+<img src="/docs/static/img/eliza_banner.jpg" alt="Banner de Eliza" width="100%" />
 
 ## Funcionalidades
 
@@ -34,7 +34,7 @@
 
 ### Edite el archivo de personaje
 
-- Revise el archivo `src/core/defaultCharacter.ts` - puede modificarlo
+- Revise el archivo `packages/core/src/defaultCharacter.ts` - puede modificarlo
 - También puede cargar personajes con el comando `pnpm start --characters="path/to/your/character.json"` y ejecutar múltiples bots simultáneamente.
 
 Después de configurar el archivo .env y el archivo de personaje, puede iniciar el bot con:
@@ -84,7 +84,7 @@ OPENAI_API_KEY=sk-* # Clave API de OpenAI, comenzando con sk-
 ELEVENLABS_XI_API_KEY= # Clave API de ElevenLabs
 GOOGLE_GENERATIVE_AI_API_KEY= # Clave API de Gemini
 
-# CONFIGURACIONES DE ELEVENLABS
+# CONFIGURACIÓN DE ELEVENLABS
 ELEVENLABS_MODEL_ID=eleven_multilingual_v2
 ELEVENLABS_VOICE_ID=21m00Tcm4TlvDq8ikWAM
 ELEVENLABS_VOICE_STABILITY=0.5

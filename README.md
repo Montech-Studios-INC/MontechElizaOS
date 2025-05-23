@@ -6,7 +6,7 @@
 
 <div align="center">
 
-📖 [Documentation](https://elizaos.github.io/eliza/) | 🎯 [Examples](https://github.com/thejoven/awesome-eliza)
+📑 [Technical Report](https://arxiv.org/pdf/2501.06781) |  📖 [Documentation](https://elizaos.github.io/eliza/) | 🎯 [Examples](https://github.com/thejoven/awesome-eliza)
 
 </div>
 
@@ -22,7 +22,7 @@
 
 ## ✨ Features
 
-- 🛠️ Full-featured Discord, Twitter and Telegram connectors
+- 🛠️ Full-featured Discord, X (Twitter) and Telegram connectors
 - 🔗 Support for every model (Llama, Grok, OpenAI, Anthropic, Gemini, etc.)
 - 👥 Multi-agent and room support
 - 📚 Easily ingest and interact with your documents
@@ -52,8 +52,9 @@
 
 > **Note for Windows Users:** [WSL 2](https://learn.microsoft.com/en-us/windows/wsl/install-manual) is required.
 
-### Use the Starter (Recommended)
+### Use the Starter (Recommended for Agent Creation)
 
+Full steps and documentation can be found in the [Eliza Starter Repository](https://github.com/elizaOS/eliza-starter).
 ```bash
 git clone https://github.com/elizaos/eliza-starter.git
 cd eliza-starter
@@ -61,7 +62,7 @@ cp .env.example .env
 pnpm i && pnpm build && pnpm start
 ```
 
-### Manually Start Eliza (Only recommended if you know what you are doing)
+### Manually Start Eliza (Only recommended for plugin or platform development)
 
 #### Checkout the latest release
 
@@ -73,6 +74,12 @@ git clone https://github.com/elizaos/eliza.git
 git checkout $(git describe --tags --abbrev=0)
 # If the above doesn't checkout the latest release, this should work:
 # git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+```
+
+If you would like the sample character files too, then run this:
+```bash
+# Download characters submodule from the character repos
+git submodule update --init
 ```
 
 #### Edit the .env file
@@ -100,7 +107,7 @@ pnpm clean
 
 Once the agent is running, you should see the message to run "pnpm start:client" at the end.
 
-Open another terminal, move to same directory, run the command below, then follow the URL to chat with your agent.
+Open another terminal, move to the same directory, run the command below, then follow the URL to chat with your agent.
 
 ```bash
 pnpm start:client
@@ -136,6 +143,12 @@ For detailed instructions on using the start script, including character managem
 
 ---
 
+### Add more plugins
+
+1. run `npx elizaos plugins list` to get a list of available plugins or visit https://elizaos.github.io/registry/
+
+2. run `npx elizaos plugins add @elizaos-plugins/plugin-NAME` to install the plugin into your instance
+
 #### Additional Requirements
 
 You may need to install Sharp. If you see an error when starting up, try installing it with the following command:
@@ -146,23 +159,145 @@ pnpm install --include=optional sharp
 
 ---
 
+## Using Your Custom Plugins
+Plugins that are not in the official registry for ElizaOS can be used as well. Here's how:
+
+### Installation
+
+1. Upload the custom plugin to the packages folder:
+
+```
+packages/
+├─plugin-example/
+├── package.json
+├── tsconfig.json
+├── src/
+│   ├── index.ts        # Main plugin entry
+│   ├── actions/        # Custom actions
+│   ├── providers/      # Data providers
+│   ├── types.ts        # Type definitions
+│   └── environment.ts  # Configuration
+├── README.md
+└── LICENSE
+```
+
+2. Add the custom plugin to your project's dependencies in the agent's package.json:
+
+```json
+{
+  "dependencies": {
+    "@elizaos/plugin-example": "workspace:*"
+  }
+}
+```
+
+3. Import the custom plugin to your agent's character.json
+
+```json
+  "plugins": [
+    "@elizaos/plugin-example",
+  ],
+```
+
+---
+
 ### Start Eliza with Gitpod
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/elizaos/eliza/tree/main)
 
 ---
 
+### Deploy Eliza in one click
+
+Use [Fleek](https://fleek.xyz/eliza/) to deploy Eliza in one click. This opens Eliza to non-developers and provides the following options to build your agent:
+1. Start with a template
+2. Build characterfile from scratch
+3. Upload pre-made characterfile
+
+Click [here](https://fleek.xyz/eliza/) to get started!
+
+---
+
 ### Community & contact
 
 - [GitHub Issues](https://github.com/elizaos/eliza/issues). Best for: bugs you encounter using Eliza, and feature proposals.
-- [Discord](https://discord.gg/ai16z). Best for: sharing your applications and hanging out with the community.
+- [elizaOS Discord](https://discord.gg/elizaos). Best for: hanging out with the elizaOS technical community
+- [DAO Discord](https://discord.gg/ai16z). Best for: hanging out with the larger non-technical community
+
+## Citation
+
+We now have a [paper](https://arxiv.org/pdf/2501.06781) you can cite for the Eliza OS:
+```bibtex
+@article{walters2025eliza,
+  title={Eliza: A Web3 friendly AI Agent Operating System},
+  author={Walters, Shaw and Gao, Sam and Nerd, Shakker and Da, Feng and Williams, Warren and Meng, Ting-Chien and Han, Hunter and He, Frank and Zhang, Allen and Wu, Ming and others},
+  journal={arXiv preprint arXiv:2501.06781},
+  year={2025}
+}
+```
 
 ## Contributors
 
 <a href="https://github.com/elizaos/eliza/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=elizaos/eliza" />
+  <img src="https://contrib.rocks/image?repo=elizaos/eliza" alt="Eliza project contributors" />
 </a>
+
 
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=elizaos/eliza&type=Date)](https://star-history.com/#elizaos/eliza&Date)
+
+## 🛠️ System Requirements
+
+### Minimum Requirements
+- CPU: Dual-core processor
+- RAM: 4GB
+- Storage: 1GB free space
+- Internet connection: Broadband (1 Mbps+)
+
+### Software Requirements
+- Python 2.7+ (3.8+ recommended)
+- Node.js 23+
+- pnpm
+- Git
+
+### Optional Requirements
+- GPU: For running local LLM models
+- Additional storage: For document storage and memory
+- Higher RAM: For running multiple agents
+
+## 📁 Project Structure
+```
+eliza/
+├── packages/
+│   ├── core/           # Core Eliza functionality
+│   ├── clients/        # Client implementations
+│   └── actions/        # Custom actions
+├── docs/              # Documentation
+├── scripts/           # Utility scripts
+└── examples/          # Example implementations
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+### Getting Started
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature-name`
+3. Make your changes
+4. Run tests: `pnpm test`
+5. Submit a pull request
+
+### Types of Contributions
+- 🐛 Bug fixes
+- ✨ New features
+- 📚 Documentation improvements
+- 🌍 Translations
+- 🧪 Test improvements
+
+### Code Style
+- Follow the existing code style
+- Add comments for complex logic
+- Update documentation for changes
+- Add tests for new features

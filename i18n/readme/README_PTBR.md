@@ -1,182 +1,124 @@
 # Eliza
 
-<img src="./docs/static/img/eliza_banner.jpg" alt="Eliza Banner" width="100%" />
+<img src="/docs/static/img/eliza_banner.jpg" alt="Eliza Banner" width="100%" />
 
-## Funcionalidades
+## ✨ Features
 
-- 🛠 Conectores completos para Discord, Twitter e Telegram
-- 👥 Suporte a múltiplos agentes e salas
-- 📚 Ingestão e interação fácil com seus documentos
+- 🛠️ Conexão completa para Discord, Twitter e Telegram
+- 🔗 Suporte para todos os modelos (Llama, Grok, OpenAI, Anthropic, etc.)
+- 👥 Suporte para multi-agente e salas
+- 📚 Fácil interação com seus documentos
 - 💾 Memória recuperável e armazenamento de documentos
-- 🚀 Altamente extensível - crie suas próprias ações e clientes para estender as capacidades
-- ☁️ Suporta muitos modelos, incluindo Llama local, OpenAI, Anthropic, Groq e mais
-- 📦 Funciona perfeitamente!
+- 🚀 Altamente extensível - crie suas próprias ações e clientes
+- 📦 Simplesmente funciona!
 
-## Para que posso usá-lo?
+## Tutoriais
+
+[Escola Dev para Agentes IA (conteúdo em inglês)](https://www.youtube.com/watch?v=ArptLpQiKfI&list=PLx5pnFXdPTRzWla0RaOxALTSTnVq53fKL)
+
+## 🎯 Em que posso usar?
 
 - 🤖 Chatbots
 - 🕵️ Agentes autônomos
 - 📈 Gestão de processos empresariais
-- 🎮 NPCs em jogos de vídeo
+- 🎮 NPCs para o seus jogos
+- 🧠 Trading
 
-# Começando
+## 🚀 Começando
 
-**Pré-requisitos (OBRIGATÓRIO):**
+### Pré-requisitos
 
 - [Python 2.7+](https://www.python.org/downloads/)
-- [Node.js 23.3+](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [Node.js 23+](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [pnpm](https://pnpm.io/installation)
+
+> **Nota para usuários de Windows:** [WSL 2](https://learn.microsoft.com/en-us/windows/wsl/install-manual) é obrigatório.
+
+### Utilizando o Starter (Recomendado)
+
+```bash
+git clone https://github.com/ai16z/eliza-starter.git
+
+cp .env.example .env
+
+pnpm i && pnpm build && pnpm start
+```
+
+Leia a [Documentação](https://elizaos.github.io/eliza/) para aprender como customizar a sua Eliza.
+
+### Executando Eliza manualmente (Recomendado apenas se você souber o que está fazendo)
+
+```bash
+# Clone o repositório
+git clone https://github.com/ai16z/eliza.git
+
+# Dê checkout no último release
+# O projeto está em constante e rápido desenvolvimento, então recomendamos que você cheque o último release
+git checkout $(git describe --tags --abbrev=0)
+```
+
+### Execute Eliza com Gitpod
+
+[![Abrindo no Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ai16z/eliza/tree/main)
 
 ### Edite o arquivo .env
 
-- Copie .env.example para .env e preencha os valores apropriados
-- Edite as variáveis de ambiente do TWITTER para adicionar o nome de usuário e senha do seu bot
-
-### Edite o arquivo de personagem
-
-- Confira o arquivo `src/core/defaultCharacter.ts` - você pode modificá-lo
-- Você também pode carregar personagens com o comando `pnpm start --characters="path/to/your/character.json"` e executar múltiplos bots ao mesmo tempo.
-
-Após configurar o arquivo .env e o arquivo de personagem, você pode iniciar o bot com o seguinte comando:
+Copie .env.example para .env e preencha os valores apropriados.
 
 ```
+cp .env.example .env
+```
+
+Nota: .env é opcional. Se você estiver planejando rodar múltiplos agentes distintos, você pode passar segredos pelo JSON do personagem
+
+### Execute Eliza automaticamente
+
+Isso vai executar tudo que é necessário para configurar o projeto e começar o bot com o personagem padrão.
+
+```bash
+sh scripts/start.sh
+```
+
+### Edite o arquivo do personagem
+
+1. Abra `packages/core/src/defaultCharacter.ts` para modificar o personagem padrão. Descomente e edite.
+
+2. Para carregar personsagens customizáveis:
+    - Use `pnpm start --characters="path/to/your/character.json"`
+    - Múltiplos arquivos de personagem podem ser usados de forma simultânea
+3. Conectando com o X (Twitter)
+    - mude `"clients": []` para `"clients": ["twitter"]` no arquivo do personagem para conectar com o X
+
+### Executando Eliza manualmente
+
+```bash
 pnpm i
+pnpm build
 pnpm start
+
+# O projeto está iterando bem rápido. Se você estiver voltando depois de um tempo, talvez precise fazer uma limpeza
+pnpm clean
 ```
 
-# Personalizando Eliza
+#### Requerimentos adicionais
 
-### Adicionando ações personalizadas
-
-Para evitar conflitos no diretório core, recomendamos adicionar ações personalizadas a um diretório `custom_actions` e depois adicioná-las ao arquivo `elizaConfig.yaml`. Veja o arquivo `elizaConfig.example.yaml` para um exemplo.
-
-## Executando com diferentes modelos
-
-### Executar com Llama
-
-Você pode executar modelos Llama 70B ou 405B configurando a variável de ambiente `XAI_MODEL` para `meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo` ou `meta-llama/Meta-Llama-3.1-405B-Instruct`
-
-### Executar com Grok
-
-Você pode executar modelos Grok configurando a variável de ambiente `XAI_MODEL` para `grok-beta`
-
-### Executar com OpenAI
-
-Você pode executar modelos OpenAI configurando a variável de ambiente `XAI_MODEL` para `gpt-4o-mini` ou `gpt-4o`
-
-## Requisitos Adicionais
-
-Pode ser necessário instalar o Sharp. Se você encontrar um erro ao iniciar, tente instalá-lo com o seguinte comando:
+Talvez você precise instalar o Sharp. Se na hora de começar estiver apresentando algum erro, tente instalar com o seguinte comando:
 
 ```
 pnpm install --include=optional sharp
 ```
 
-# Configuração do Ambiente
+### Comunidade & contato
 
-Você precisará adicionar variáveis de ambiente ao seu arquivo .env para se conectar a várias plataformas:
+- [GitHub Issues](https://github.com/ai16z/eliza/issues). Melhor utilizado para: bugs que você encontrar utilizando a Eliza, e propostas de features.
+- [Discord](https://discord.gg/ai16z). Melhor para: compartilhar seus apps e se conectar com a comunidade.
 
-```
-# Variáveis de ambiente obrigatórias
-DISCORD_APPLICATION_ID=
-DISCORD_API_TOKEN= # Token do bot
-OPENAI_API_KEY=sk-* # Chave API do OpenAI, começando com sk-
-ELEVENLABS_XI_API_KEY= # Chave API do elevenlabs
-GOOGLE_GENERATIVE_AI_API_KEY= # Chave API do Gemini
+## Contribuidores
 
-# CONFIGURAÇÕES DO ELEVENLABS
-ELEVENLABS_MODEL_ID=eleven_multilingual_v2
-ELEVENLABS_VOICE_ID=21m00Tcm4TlvDq8ikWAM
-ELEVENLABS_VOICE_STABILITY=0.5
-ELEVENLABS_VOICE_SIMILARITY_BOOST=0.9
-ELEVENLABS_VOICE_STYLE=0.66
-ELEVENLABS_VOICE_USE_SPEAKER_BOOST=false
-ELEVENLABS_OPTIMIZE_STREAMING_LATENCY=4
-ELEVENLABS_OUTPUT_FORMAT=pcm_16000
+<a href="https://github.com/ai16z/eliza/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ai16z/eliza" />
+</a>
 
-TWITTER_DRY_RUN=false
-TWITTER_USERNAME= # Nome de usuário da conta
-TWITTER_PASSWORD= # Senha da conta
-TWITTER_EMAIL= # Email da conta
+## Histórico de estrelas
 
-XAI_API_KEY=
-XAI_MODEL=
-
-
-# Para perguntar coisas ao Claude
-ANTHROPIC_API_KEY=
-
-# EVM
-EVM_PRIVATE_KEY=EXAMPLE_WALLET_PRIVATE_KEY
-
-# Solana
-SOLANA_PRIVATE_KEY=EXAMPLE_WALLET_PRIVATE_KEY
-SOLANA_PUBLIC_KEY=EXAMPLE_WALLET_PUBLIC_KEY
-
-# Fallback Wallet Configuration (deprecated)
-WALLET_PRIVATE_KEY=EXAMPLE_WALLET_PRIVATE_KEY
-WALLET_PUBLIC_KEY=EXAMPLE_WALLET_PUBLIC_KEY
-
-BIRDEYE_API_KEY=
-
-SOL_ADDRESS=So11111111111111111111111111111111111111112
-SLIPPAGE=1
-SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
-HELIUS_API_KEY=
-
-
-## Telegram
-TELEGRAM_BOT_TOKEN=
-
-TOGETHER_API_KEY=
-```
-
-# Configuração de Inferência Local
-
-### Configuração CUDA
-
-Se você tiver uma GPU NVIDIA, pode instalar o CUDA para acelerar dramaticamente a inferência local.
-
-```
-pnpm install
-npx --no node-llama-cpp source download --gpu cuda
-```
-
-Certifique-se de ter instalado o CUDA Toolkit, incluindo cuDNN e cuBLAS.
-
-### Executando localmente
-
-Adicione XAI_MODEL e configure-o para uma das opções acima de [Executar com Llama](#executar-com-llama) - você pode deixar XAI_API_KEY em branco, ele baixa o modelo do huggingface e faz consultas localmente
-
-# Clientes
-
-## Bot do Discord
-
-Para ajuda com a configuração do seu Bot do Discord, confira aqui: https://discordjs.guide/preparations/setting-up-a-bot-application.html
-
-# Desenvolvimento
-
-## Testes
-
-Para executar a suíte de testes:
-
-```bash
-pnpm test           # Executar testes uma vez
-pnpm test:watch    # Executar testes no modo watch
-```
-
-Para testes específicos de banco de dados:
-
-```bash
-pnpm test:sqlite   # Executar testes com SQLite
-pnpm test:sqljs    # Executar testes com SQL.js
-```
-
-Os testes são escritos usando Jest e podem ser encontrados em arquivos `src/**/*.test.ts`. O ambiente de teste está configurado para:
-
-- Carregar variáveis de ambiente de `.env.test`
-- Usar um tempo limite de 2 minutos para testes de longa duração
-- Suportar módulos ESM
-- Executar testes em sequência (--runInBand)
-
-Para criar novos testes, adicione um arquivo `.test.ts` adjacente ao código que você está testando.
+[![Gráfico do histórico de estrelas](https://api.star-history.com/svg?repos=ai16z/eliza&type=Date)](https://star-history.com/#ai16z/eliza&Date)
